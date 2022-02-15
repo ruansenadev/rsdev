@@ -13,13 +13,16 @@
     "@fontsource/baloo-2": "^4.5.4",
     "@fontsource/coda": "^4.5.1",
     "@fontsource/press-start-2p": "^4.5.1",
+    "axios": "^0.26.0",
     "framer-motion": "^6",
     "next": "^12.0.8",
+    "qs": "^6.10.3",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.17",
+    "@types/qs": "^6.9.7",
     "@types/react": "^17.0.39",
     "eslint": "8.7.0",
     "eslint-config-next": "^12.0.8",
