@@ -12,7 +12,7 @@ import "../styles/global.scss";
 import { Strapi } from "../lib/strapi";
 import { StrapiEntryAttr, StrapiError, StrapiResponse } from "../types/api/rest";
 import { IGlobalApp } from "../types/app";
-import { getStrapiMedia } from "../util/strapi";
+import { getStrapiMedia } from "../utils/strapi";
 import { GlobalContextProvider } from "../contexts/globalContext";
 
 interface MyAppProps extends AppProps {
@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps, cookies, global }: MyAppProps) {
   return (
     <>
       <Head>
-        <link rel="shortcut icon" href={getStrapiMedia(global.favicon.data.attributes)} />
+        <link rel="shortcut icon" href={getStrapiMedia(global.favicon.data?.attributes)} />
         <meta name="author" content={global.metaAuthor} />
       </Head>
       <GlobalContextProvider data={global}>
@@ -48,7 +48,10 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
     },
   })
     .then((res: StrapiResponse<IGlobalApp>) => res.data.data.attributes)
-    .catch((err: StrapiError) => console.error(err.response?.data.error ?? err));
+    .catch((err: StrapiError) => {
+      console.error(err.response?.data.error ?? err.toJSON());
+      return { favicon: {}, defaultSeo: {} };
+    });
 
   return {
     ...appProps,

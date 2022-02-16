@@ -75,10 +75,13 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     },
   })
     .then((res: StrapiResponse<IHomePage>) => res.data.data.attributes)
-    .catch((err: StrapiError) => console.error(err.response?.data.error ?? err));
+    .catch((err: StrapiError) => {
+      console.error(err.response?.data.error ?? err.toJSON());
+      return { seo: {} };
+    });
 
   return {
-    props: { page: page ?? {} },
-    revalidate: 1,
+    props: { page },
+    revalidate: 60 * 5,
   };
 };
