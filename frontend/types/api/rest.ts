@@ -9,7 +9,7 @@ export type StrapiEntry<T> = {
 };
 
 export type StrapiData<T> = {
-  data: StrapiEntry<T>;
+  data?: StrapiEntry<T>;
 };
 export type StrapiDataList<T> = {
   data: StrapiEntry<T>[];
