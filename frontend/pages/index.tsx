@@ -1,18 +1,18 @@
 import { GetStaticProps } from "next";
-import Image from "next/image";
+import { Layout } from "../components/Layout";
 import { Seo } from "../components/Seo";
 import { Strapi } from "../lib/strapi";
-import styles from "../styles/Home.module.css";
-import { StrapiEntryAttr, StrapiError, StrapiResponse } from "../types/api/rest";
+import { StrapiAttr, StrapiError, StrapiResponse } from "../types/api/rest";
 import { IHomePage } from "../types/page";
+import styles from "../styles/Home.module.css";
 
 interface HomeProps {
-  page: StrapiEntryAttr<IHomePage>;
+  page: StrapiAttr<IHomePage>;
 }
 
 export default function Home({ page }: HomeProps) {
   return (
-    <div className={styles.container}>
+    <Layout>
       <Seo seo={page.seo} />
 
       <main className={styles.main}>
@@ -49,20 +49,7 @@ export default function Home({ page }: HomeProps) {
           </a>
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+    </Layout>
   );
 }
 

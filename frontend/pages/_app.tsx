@@ -10,14 +10,14 @@ import "@fontsource/press-start-2p/400.css";
 import theme from "../styles/theme";
 import "../styles/global.scss";
 import { Strapi } from "../lib/strapi";
-import { StrapiEntryAttr, StrapiError, StrapiResponse } from "../types/api/rest";
+import { StrapiAttr, StrapiError, StrapiResponse } from "../types/api/rest";
 import { IGlobalApp } from "../types/app";
 import { getStrapiMedia } from "../utils/strapi";
 import { GlobalContextProvider } from "../contexts/globalContext";
 
 interface MyAppProps extends AppProps {
   cookies: string;
-  global: StrapiEntryAttr<IGlobalApp>;
+  global: StrapiAttr<IGlobalApp>;
 }
 
 function MyApp({ Component, pageProps, cookies, global }: MyAppProps) {
@@ -44,13 +44,15 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
       populate: {
         favicon: "*",
         defaultSeo: { populate: "*" },
+        header: { populate: "*" },
+        footer: { populate: "*" },
       },
     },
   })
     .then((res: StrapiResponse<IGlobalApp>) => res.data.data.attributes)
     .catch((err: StrapiError) => {
       console.error(err.response?.data.error ?? err.toJSON());
-      return { favicon: {}, defaultSeo: {} };
+      return { favicon: {}, defaultSeo: {}, header: {}, footer: {} };
     });
 
   return {

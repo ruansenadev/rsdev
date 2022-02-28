@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_links_link_buttons",
+  "info": {
+    "displayName": "Button link",
+    "icon": "mouse-pointer",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "isExternal": {
+      "type": "boolean",
+      "required": true
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "ghost",
+        "outline",
+        "solid",
+        "link",
+        "unstyled"
+      ],
+      "default": "link"
+    },
+    "leftGlyph": {
+      "type": "string",
+      "regex": "^\\S$"
+    },
+    "rightGlyph": {
+      "type": "string",
+      "regex": "^\\S$",
+      "default": "↗"
+    }
+  }
+}

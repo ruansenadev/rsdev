@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_elements_socials",
+  "info": {
+    "displayName": "Social",
+    "icon": "user-friends",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "social": {
+      "type": "enumeration",
+      "enum": [
+        "github",
+        "linkedin",
+        "whatsapp",
+        "instagram",
+        "facebook"
+      ],
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "default": "#!",
+      "required": true
+    }
+  }
+}
