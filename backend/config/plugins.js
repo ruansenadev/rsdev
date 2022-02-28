@@ -4,10 +4,10 @@ module.exports = ({ env }) => ({
     config: {
       breakpoints: {
         // match frontend breakpoints
-        sm: 320,
+        sm: 480,
         md: 768,
-        lg: 960,
-        xl: 1200,
+        lg: 992,
+        xl: 1280,
         "2xl": 1536,
       },
       // uncomment below or use local provider by default in development
