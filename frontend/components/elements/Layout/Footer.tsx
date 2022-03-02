@@ -1,6 +1,6 @@
 import { Box, BoxProps, Flex, HStack, Image, Text } from "@chakra-ui/react";
-import { IFooter } from "../../types/app";
-import { Social } from "./Social";
+import { IFooter } from "../../../types/app";
+import { Social } from "../Social";
 
 interface FooterProps extends BoxProps {
   footer: IFooter;

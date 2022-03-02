@@ -13,7 +13,8 @@ import { Strapi } from "../lib/strapi";
 import { StrapiAttr, StrapiError, StrapiResponse } from "../types/api/rest";
 import { IGlobalApp } from "../types/app";
 import { getStrapiMedia } from "../utils/strapi";
-import { GlobalContextProvider } from "../contexts/globalContext";
+import { GlobalContextProvider } from "../contexts/GlobalContext";
+import { SidebarProvider } from "../contexts/SidebarContext";
 
 interface MyAppProps extends AppProps {
   cookies: string;
@@ -29,7 +30,9 @@ function MyApp({ Component, pageProps, cookies, global }: MyAppProps) {
       </Head>
       <GlobalContextProvider data={global}>
         <ChakraProvider theme={theme} colorModeManager={typeof cookies === "string" ? cookieStorageManager(cookies) : localStorageManager}>
-          <Component {...pageProps} />
+          <SidebarProvider>
+            <Component {...pageProps} />
+          </SidebarProvider>
         </ChakraProvider>
       </GlobalContextProvider>
     </>
@@ -44,7 +47,7 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
       populate: {
         favicon: "*",
         defaultSeo: { populate: "*" },
-        header: { populate: "*" },
+        navbar: { populate: "*" },
         footer: { populate: "*" },
       },
     },
@@ -52,7 +55,7 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
     .then((res: StrapiResponse<IGlobalApp>) => res.data.data.attributes)
     .catch((err: StrapiError) => {
       console.error(err.response?.data.error ?? err.toJSON());
-      return { favicon: {}, defaultSeo: {}, header: {}, footer: {} };
+      return { favicon: {}, defaultSeo: {}, navbar: {}, footer: {} };
     });
 
   return {

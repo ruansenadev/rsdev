@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useContext } from "react";
-import { GlobalContext } from "../contexts/globalContext";
+import { GlobalContext } from "../contexts/GlobalContext";
 import { ISeo } from "../types/app";
 import { getStrapiMedia } from "../utils/strapi";
 

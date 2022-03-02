@@ -58,7 +58,7 @@
       "type": "string",
       "required": true
     },
-    "header": {
+    "navbar": {
       "type": "component",
       "repeatable": false,
       "pluginOptions": {

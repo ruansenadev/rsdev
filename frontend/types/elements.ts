@@ -1,12 +1,13 @@
+import { ButtonProps } from "@chakra-ui/react";
+
 export type ILink = {
   text: string;
   url: string;
   isExternal: boolean;
 };
 
-export type IButton = {
+export type IButton = Pick<ButtonProps, "variant"> & {
   text: string;
-  variant: "ghost" | "outline" | "solid" | "link";
   leftGlyph?: string;
   rightGlyph?: string;
 };
