@@ -16,7 +16,7 @@ export function Sidebar({ navbar, siteName }: SidebarProps) {
     lg: false,
   });
 
-  if (isMobile && navbar?.links.length) {
+  if (isMobile) {
     return (
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay>
