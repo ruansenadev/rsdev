@@ -6,7 +6,7 @@ import { CustomLink, CustomLinkProps } from "./CustomLink";
 interface ActiveLinkProps extends CustomLinkProps {
   children?: ReactElement;
   shouldMatchPathname?: boolean;
-  activeColor?: Pick<ColorProps, "color">["color"];
+  activeColor?: ColorProps["color"];
 }
 
 export function ActiveLink({ children, shouldMatchPathname = false, activeColor = "purple.500", ...rest }: ActiveLinkProps) {

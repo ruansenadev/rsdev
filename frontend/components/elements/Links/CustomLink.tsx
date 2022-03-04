@@ -1,37 +1,60 @@
 import NextLink from "next/link";
-import { Link, LinkProps } from "@chakra-ui/react";
-import { ILink } from "../../../types/elements";
-import { ReactNode } from "react";
+import { Link, LinkOverlay, LinkProps } from "@chakra-ui/react";
+import { ElementComponent, ILink } from "../../../types/elements";
 
-export interface CustomLinkProps extends LinkProps {
-  link?: ILink;
-  children?: ReactNode;
+export interface CustomLinkProps extends LinkProps, Partial<ElementComponent<ILink>> {
+  wrapLinkOutside?: boolean;
 }
 
-export function CustomLink({ link, children, ...rest }: CustomLinkProps) {
-  const isInternalLink = String(link?.url).startsWith("/") || String(rest.href).startsWith("/");
+export function CustomLink({ data, children, wrapLinkOutside, ...rest }: CustomLinkProps) {
+  const isInternalLink = String(data?.url).startsWith("/") || String(rest.href).startsWith("/");
+
+  if (wrapLinkOutside) {
+    // uses linkoverlay el to be wrap on outside with a linkbox
+    if (isInternalLink) {
+      return (
+        <NextLink href={data?.url ?? rest.href} passHref>
+          <LinkOverlay {...{ ...rest, href: null }}>{data?.text ?? children}</LinkOverlay>
+        </NextLink>
+      );
+    }
+
+    if (data?.newTab || rest.isExternal) {
+      return (
+        <LinkOverlay href={data?.url} isExternal {...rest}>
+          {data?.text ?? children}
+        </LinkOverlay>
+      );
+    }
+
+    return (
+      <LinkOverlay href={data?.url} {...rest}>
+        {data?.text ?? children}
+      </LinkOverlay>
+    );
+  }
 
   // For internal links, use the Next.js Link component
   if (isInternalLink) {
     return (
-      <NextLink href={link?.url ?? rest.href} passHref>
-        <Link {...{ ...rest, href: null }}>{link?.text ?? children}</Link>
+      <NextLink href={data?.url ?? rest.href} passHref>
+        <Link {...{ ...rest, href: null }}>{data?.text ?? children}</Link>
       </NextLink>
     );
   }
 
   // Plain <a> tags for external links
-  if (link?.isExternal || rest.isExternal) {
+  if (data?.newTab || rest.isExternal) {
     return (
-      <Link href={link?.url} isExternal {...rest}>
-        {link?.text ?? children}
+      <Link href={data?.url} isExternal {...rest}>
+        {data?.text ?? children}
       </Link>
     );
   }
 
   return (
-    <Link href={link?.url} {...rest}>
-      {link?.text ?? children}
+    <Link href={data?.url} {...rest}>
+      {data?.text ?? children}
     </Link>
   );
 }

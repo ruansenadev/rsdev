@@ -1,41 +1,92 @@
 import { ButtonProps as ChakraButtonProps, Button as ChakraButton, Box, LinkOverlay, LinkBox } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { IButtonLink } from "../../../types/elements";
+import { ElementComponent, IButtonLink } from "../../../types/elements";
 
-interface ButtonLinkProps extends ChakraButtonProps {
-  buttonLink: IButtonLink;
+interface ButtonLinkProps extends ChakraButtonProps, ElementComponent<IButtonLink> {
+  wrapLinkOutside?: boolean;
 }
 
-export function ButtonLink({ buttonLink, ...rest }: ButtonLinkProps) {
-  const isInternalLink = buttonLink.url.startsWith("/");
+export function ButtonLink({ data, wrapLinkOutside, ...rest }: ButtonLinkProps) {
+  const isInternalLink = data.url.startsWith("/");
+
+  if (wrapLinkOutside) {
+    // uses linkoverlay el to be wrap on outside with a linkbox
+    if (isInternalLink) {
+      return (
+        <>
+          <ChakraButton
+            variant={data.variant}
+            leftIcon={data.leftGlyph ? <Box>{data.leftGlyph}</Box> : null}
+            rightIcon={data.rightGlyph ? <Box>{data.rightGlyph}</Box> : null}
+            {...rest}
+          >
+            {data.text}
+          </ChakraButton>
+          <NextLink href={data.url} passHref>
+            <LinkOverlay />
+          </NextLink>
+        </>
+      );
+    }
+
+    if (data.newTab) {
+      return (
+        <>
+          <ChakraButton
+            variant={data.variant}
+            leftIcon={data.leftGlyph ? <Box>{data.leftGlyph}</Box> : null}
+            rightIcon={data.rightGlyph ? <Box>{data.rightGlyph}</Box> : null}
+            {...rest}
+          >
+            {data.text}
+          </ChakraButton>
+          <LinkOverlay href={data.url} isExternal />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <ChakraButton
+          variant={data.variant}
+          leftIcon={data.leftGlyph ? <Box>{data.leftGlyph}</Box> : null}
+          rightIcon={data.rightGlyph ? <Box>{data.rightGlyph}</Box> : null}
+          {...rest}
+        >
+          {data.text}
+        </ChakraButton>
+        <LinkOverlay href={data.url} />
+      </>
+    );
+  }
 
   if (isInternalLink) {
     return (
-      <NextLink href={buttonLink.url} passHref>
+      <NextLink href={data.url} passHref>
         <ChakraButton
           as="a"
-          variant={buttonLink.variant}
-          leftIcon={buttonLink.leftGlyph ? <Box>{buttonLink.leftGlyph}</Box> : null}
-          rightIcon={buttonLink.rightGlyph ? <Box>{buttonLink.rightGlyph}</Box> : null}
+          variant={data.variant}
+          leftIcon={data.leftGlyph ? <Box>{data.leftGlyph}</Box> : null}
+          rightIcon={data.rightGlyph ? <Box>{data.rightGlyph}</Box> : null}
           {...rest}
         >
-          {buttonLink.text}
+          {data.text}
         </ChakraButton>
       </NextLink>
     );
   }
 
-  if (buttonLink.isExternal) {
+  if (data.newTab) {
     return (
       <LinkBox>
         <ChakraButton
-          variant={buttonLink.variant}
-          leftIcon={buttonLink.leftGlyph ? <Box>{buttonLink.leftGlyph}</Box> : null}
-          rightIcon={buttonLink.rightGlyph ? <Box>{buttonLink.rightGlyph}</Box> : null}
+          variant={data.variant}
+          leftIcon={data.leftGlyph ? <Box>{data.leftGlyph}</Box> : null}
+          rightIcon={data.rightGlyph ? <Box>{data.rightGlyph}</Box> : null}
           {...rest}
         >
-          <LinkOverlay href={buttonLink.url} isExternal>
-            {buttonLink.text}
+          <LinkOverlay href={data.url} isExternal>
+            {data.text}
           </LinkOverlay>
         </ChakraButton>
       </LinkBox>
@@ -45,13 +96,13 @@ export function ButtonLink({ buttonLink, ...rest }: ButtonLinkProps) {
   return (
     <ChakraButton
       as="a"
-      href={buttonLink.url}
-      variant={buttonLink.variant}
-      leftIcon={buttonLink.leftGlyph ? <Box>{buttonLink.leftGlyph}</Box> : null}
-      rightIcon={buttonLink.rightGlyph ? <Box>{buttonLink.rightGlyph}</Box> : null}
+      href={data.url}
+      variant={data.variant}
+      leftIcon={data.leftGlyph ? <Box>{data.leftGlyph}</Box> : null}
+      rightIcon={data.rightGlyph ? <Box>{data.rightGlyph}</Box> : null}
       {...rest}
     >
-      {buttonLink.text}
+      {data.text}
     </ChakraButton>
   );
 }

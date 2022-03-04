@@ -15,9 +15,9 @@
       "type": "string",
       "required": true
     },
-    "isExternal": {
+    "newTab": {
       "type": "boolean",
-      "required": true
+      "required": false
     },
     "variant": {
       "type": "enumeration",
@@ -37,7 +37,7 @@
     "rightGlyph": {
       "type": "string",
       "regex": "^\\S$",
-      "default": "↗"
+      "default": "→"
     }
   }
 }

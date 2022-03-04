@@ -3,7 +3,7 @@ import { FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaWhatsapp } from "react
 import { ElementType } from "react";
 import { Icon, IconProps, Link } from "@chakra-ui/react";
 
-const SocialIcon: { [Key in Pick<ISocial, "social">["social"]]: ElementType } = {
+const SocialIcon: { [Key in ISocial["social"]]: ElementType } = {
   github: FaGithub,
   linkedin: FaLinkedin,
   instagram: FaInstagram,

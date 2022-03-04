@@ -15,9 +15,9 @@
       "type": "string",
       "required": true
     },
-    "isExternal": {
+    "newTab": {
       "type": "boolean",
-      "required": true
+      "required": false
     }
   }
 }

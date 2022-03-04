@@ -41,7 +41,7 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
                   {navbar.links.map((link, i) => (
                     <ActiveLink
                       key={link.text + i}
-                      link={link}
+                      data={link}
                       p="2"
                       fontWeight="medium"
                       fontSize="lg"

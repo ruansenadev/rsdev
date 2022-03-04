@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_elements_action_cards",
+  "info": {
+    "displayName": "Action card",
+    "icon": "angle-double-right",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.link-button",
+      "required": true
+    }
+  }
+}
