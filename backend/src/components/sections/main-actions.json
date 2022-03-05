@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_sections_main_actions",
+  "info": {
+    "displayName": "Main actions",
+    "icon": "arrows-alt"
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "displayName": "Action card",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.action-card",
+      "required": true
+    }
+  }
+}

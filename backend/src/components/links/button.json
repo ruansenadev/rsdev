@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_links_buttons",
+  "info": {
+    "displayName": "Button",
+    "icon": "mouse",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "ghost",
+        "outline",
+        "solid",
+        "link",
+        "unstyled"
+      ],
+      "default": "solid",
+      "required": false
+    },
+    "leftGlyph": {
+      "type": "string",
+      "regex": "^\\S$"
+    },
+    "rightGlyph": {
+      "type": "string",
+      "regex": "^\\S$"
+    }
+  }
+}

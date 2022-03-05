@@ -10,26 +10,29 @@ import "@fontsource/press-start-2p/400.css";
 import theme from "../styles/theme";
 import "../styles/global.scss";
 import { Strapi } from "../lib/strapi";
-import { StrapiEntryAttr, StrapiError, StrapiResponse } from "../types/api/rest";
+import { StrapiAttr, StrapiError, StrapiResponse } from "../types/api/rest";
 import { IGlobalApp } from "../types/app";
-import { getStrapiMedia } from "../util/strapi";
-import { GlobalContextProvider } from "../contexts/globalContext";
+import { getStrapiMedia } from "../utils/strapi";
+import { GlobalContextProvider } from "../contexts/GlobalContext";
+import { SidebarProvider } from "../contexts/SidebarContext";
 
 interface MyAppProps extends AppProps {
   cookies: string;
-  global: StrapiEntryAttr<IGlobalApp>;
+  global: StrapiAttr<IGlobalApp>;
 }
 
 function MyApp({ Component, pageProps, cookies, global }: MyAppProps) {
   return (
     <>
       <Head>
-        <link rel="shortcut icon" href={getStrapiMedia(global.favicon.data.attributes)} />
+        <link rel="shortcut icon" href={getStrapiMedia(global.favicon.data?.attributes)} />
         <meta name="author" content={global.metaAuthor} />
       </Head>
       <GlobalContextProvider data={global}>
         <ChakraProvider theme={theme} colorModeManager={typeof cookies === "string" ? cookieStorageManager(cookies) : localStorageManager}>
-          <Component {...pageProps} />
+          <SidebarProvider>
+            <Component {...pageProps} />
+          </SidebarProvider>
         </ChakraProvider>
       </GlobalContextProvider>
     </>
@@ -44,11 +47,16 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
       populate: {
         favicon: "*",
         defaultSeo: { populate: "*" },
+        navbar: { populate: "*" },
+        footer: { populate: "*" },
       },
     },
   })
     .then((res: StrapiResponse<IGlobalApp>) => res.data.data.attributes)
-    .catch((err: StrapiError) => console.error(err.response?.data.error ?? err));
+    .catch((err: StrapiError) => {
+      console.error(err.response?.data.error ?? err.toJSON());
+      return { favicon: {}, defaultSeo: {}, navbar: {}, footer: {} };
+    });
 
   return {
     ...appProps,

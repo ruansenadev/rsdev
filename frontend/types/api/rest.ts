@@ -1,10 +1,16 @@
 import { AxiosError, AxiosResponse } from "axios";
 
-export type StrapiEntryAttr<T> = T & { createdAt: string; updatedAt: string; publishedAt?: string; locale?: string };
+export type StrapiAttr<T> = T & { createdAt: string; updatedAt: string; publishedAt?: string; locale?: string };
+
+export type StrapiComp<T> = T & { id: number | string };
+
+export type StrapiDynamic<T> = T & { id: number | string; __component: string };
+
+export type StrapiDynamicZone<T> = StrapiDynamic<T>[];
 
 export type StrapiEntry<T> = {
   id: number | string;
-  attributes: StrapiEntryAttr<T>;
+  attributes: StrapiAttr<T>;
   meta?: any;
 };
 
