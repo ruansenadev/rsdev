@@ -12,15 +12,13 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const { siteName, navbar, footer } = useContext(GlobalContext);
   return (
-    <>
-      <Flex direction="column" align="stretch" minH="100vh" w="full" maxW="container.md" mx="auto">
-        <Box flex="1">
-          <Navbar navbar={navbar} siteName={siteName} />
-          <Box>{children}</Box>
-        </Box>
-        <Footer w="full" footer={footer} />
+    <Flex direction="column" align="stretch" minH="100vh" w="full" maxW="container.md" mx="auto">
+      <Navbar navbar={navbar} siteName={siteName} />
+      <Flex as="main" flex="1" align="stretch">
+        {children}
       </Flex>
+      <Footer footer={footer} />
       {!!navbar?.links.length && <Sidebar navbar={navbar} siteName={siteName} />}
-    </>
+    </Flex>
   );
 }
