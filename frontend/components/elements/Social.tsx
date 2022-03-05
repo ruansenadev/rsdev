@@ -17,7 +17,7 @@ interface SocialProps extends IconProps {
 
 export function Social({ data, ...rest }: SocialProps) {
   return (
-    <Link href={data.url} isExternal>
+    <Link d="inline-flex" href={data.url} isExternal>
       <Icon aria-label={data.social} as={SocialIcon[data.social]} {...rest} />
     </Link>
   );

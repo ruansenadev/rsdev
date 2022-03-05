@@ -1,4 +1,4 @@
-import { Box, BoxProps, Flex, HStack, Icon, IconButton, Image, Link, useDisclosure } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, HStack, Icon, IconButton, Image, Link, useDisclosure, useColorMode, Center } from "@chakra-ui/react";
 import { MdMenu } from "react-icons/md";
 import NextLink from "next/link";
 import { useState } from "react";
@@ -16,6 +16,7 @@ interface NavbarProps extends BoxProps {
 }
 
 export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
+  const { toggleColorMode, colorMode } = useColorMode();
   const { isOpen: isSlide, onClose: onBlur, onOpen: onSlide } = useDisclosure({ defaultIsOpen: false });
   const [slideLeft, setSlideLeft] = useState<number>(0);
   const [slideWidth, setSlideWidth] = useState<number>(0);
@@ -66,8 +67,19 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
             )}
           </Box>
         </Flex>
-        {!!navbar.links?.length && (
-          <Flex>
+        <HStack spacing={["4", null, "8"]}>
+          <IconButton
+            aria-label="Tema de cores"
+            icon={
+              <Center w="full" h="full">
+                {colorMode === "dark" ? "☼" : "☀"}
+              </Center>
+            }
+            fontSize="3xl"
+            variant="unstyled"
+            onClick={toggleColorMode}
+          />
+          {!!navbar.links?.length && (
             <IconButton
               display={[null, null, null, "none"]}
               aria-label="Menu principal"
@@ -76,8 +88,8 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
               variant="unstyled"
               onClick={onOpen}
             />
-          </Flex>
-        )}
+          )}
+        </HStack>
       </Flex>
     </Box>
   );
