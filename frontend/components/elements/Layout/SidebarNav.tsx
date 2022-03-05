@@ -9,10 +9,10 @@ interface SidebarNavProps {
 export function SidebarNav({ navbar }: SidebarNavProps) {
   return (
     <VStack spacing={["4", null, "6"]} align="flex-start" mt="10">
-      {navbar?.links.map((link, i) => (
+      {navbar.links?.map((link, i) => (
         <ActiveLink
           key={link.text + i}
-          link={link}
+          data={link}
           p="2"
           fontWeight="medium"
           fontSize="lg"

@@ -13,11 +13,11 @@ export function ActiveLink({ children, shouldMatchPathname = false, activeColor 
   const { pathname } = useRouter();
   let isActive = false;
 
-  if (shouldMatchPathname && (pathname === rest.href || pathname === rest.link?.url)) {
+  if (shouldMatchPathname && (pathname === rest.href || pathname === rest.data?.url)) {
     isActive = true;
   }
 
-  if (!shouldMatchPathname && (pathname.startsWith(String(rest.href)) || pathname.startsWith(rest.link?.url))) {
+  if (!shouldMatchPathname && (pathname.startsWith(String(rest.href)) || pathname.startsWith(rest.data?.url))) {
     isActive = true;
   }
 

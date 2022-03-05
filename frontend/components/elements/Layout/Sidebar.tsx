@@ -16,7 +16,7 @@ export function Sidebar({ navbar, siteName }: SidebarProps) {
     lg: false,
   });
 
-  if (isMobile) {
+  if (navbar.links?.length && isMobile) {
     return (
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay>
@@ -24,7 +24,7 @@ export function Sidebar({ navbar, siteName }: SidebarProps) {
             <DrawerCloseButton fontSize="xl" right="4" boxSize="10" mt={["5", null, "3"]} />
             <DrawerHeader>
               <Box h="12" w="32" p="2" fontSize="3xl" fontWeight="semibold" letterSpacing="wide" lineHeight="none" _hover={{ textDecor: "none" }}>
-                {navbar?.logo.data ? (
+                {navbar.logo?.data ? (
                   <Image w={120} h={33} src={navbar.logo.data.attributes.url} alt={navbar.logo.data.attributes.alternativeText} />
                 ) : (
                   <Box as="h1">{siteName}</Box>

@@ -27,7 +27,7 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
         <Flex align="baseline" w="full">
           <NextLink href="/" passHref>
             <Link h="12" w="32" p="2" fontSize="3xl" fontWeight="semibold" letterSpacing="wide" lineHeight="none" _hover={{ textDecor: "none" }}>
-              {navbar?.logo.data ? (
+              {navbar.logo?.data ? (
                 <Image w={120} h={33} src={navbar.logo.data.attributes.url} alt={navbar.logo.data.attributes.alternativeText} />
               ) : (
                 <Box as="h1">{siteName}</Box>
@@ -35,7 +35,7 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
             </Link>
           </NextLink>
           <Box display={["none", null, null, "initial"]} pos="relative">
-            {!!navbar?.links.length && (
+            {!!navbar.links?.length && (
               <>
                 <HStack spacing={["4", null, "6"]} align="baseline" ml="10">
                   {navbar.links.map((link, i) => (
@@ -66,7 +66,7 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
             )}
           </Box>
         </Flex>
-        {!!navbar?.links.length && (
+        {!!navbar.links?.length && (
           <Flex>
             <IconButton
               display={[null, null, null, "none"]}

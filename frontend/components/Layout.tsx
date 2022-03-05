@@ -18,7 +18,7 @@ export function Layout({ children }: LayoutProps) {
         {children}
       </Flex>
       <Footer footer={footer} />
-      {!!navbar?.links.length && <Sidebar navbar={navbar} siteName={siteName} />}
+      <Sidebar navbar={navbar} siteName={siteName} />
     </Flex>
   );
 }
