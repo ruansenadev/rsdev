@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 import { ElementType } from "react";
 import { StrapiDynamic } from "../types/api/rest";
-import { IHomePage } from "../types/page";
+import { IPage } from "../types/page";
 import { MainActions } from "./sections/MainActions";
 
 // Map Strapi sections to section components
@@ -10,7 +10,7 @@ const sectionComponents: { [key: string]: ElementType } = {
 };
 
 interface SectionProps {
-  sectionData: StrapiDynamic<Partial<IHomePage["contentSections"][0]>>;
+  sectionData: StrapiDynamic<Partial<IPage["contentSections"][0]>>;
 }
 // Display a section individually
 function Section({ sectionData }: SectionProps) {
@@ -26,7 +26,7 @@ function Section({ sectionData }: SectionProps) {
 }
 
 interface SectionsProps {
-  sections: IHomePage["contentSections"];
+  sections: IPage["contentSections"];
 }
 // Display the list of sections
 export function Sections({ sections }: SectionsProps) {

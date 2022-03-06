@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 
-export type StrapiAttr<T> = T & { createdAt: string; updatedAt: string; publishedAt?: string; locale?: string };
+export type StrapiAttr<T> = T & { createdAt: string; updatedAt: string; publishedAt?: string; locale: string; localizations?: StrapiDataList<T> };
 
 export type StrapiComp<T> = T & { id: number | string };
 

@@ -10,15 +10,36 @@ interface ActiveLinkProps extends CustomLinkProps {
 }
 
 export function ActiveLink({ children, shouldMatchPathname = false, activeColor = "purple.500", ...rest }: ActiveLinkProps) {
-  const { pathname } = useRouter();
+  const { pathname, locale } = useRouter();
   let isActive = false;
 
-  if (shouldMatchPathname && (pathname === rest.href || pathname === rest.data?.url)) {
-    isActive = true;
-  }
+  if (rest.locale) {
+    const pathnameLocale = `/${locale}${pathname}`;
 
-  if (!shouldMatchPathname && (pathname.startsWith(String(rest.href)) || pathname.startsWith(rest.data?.url))) {
-    isActive = true;
+    // If locale is explicit in link should match router locale
+    if (rest.locale === locale) {
+      if (shouldMatchPathname && (pathnameLocale === rest.href || pathnameLocale === rest.as || pathnameLocale === rest.data?.url)) {
+        isActive = true;
+      }
+
+      if (
+        !shouldMatchPathname &&
+        (pathnameLocale.startsWith(String(rest.href)) || pathnameLocale.startsWith(String(rest.as)) || pathnameLocale.startsWith(rest.data?.url))
+      ) {
+        isActive = true;
+      }
+    }
+  } else {
+    if (shouldMatchPathname && (pathname === rest.href || pathname === rest.as || pathname === rest.data?.url)) {
+      isActive = true;
+    }
+
+    if (
+      !shouldMatchPathname &&
+      (pathname.startsWith(String(rest.href)) || pathname.startsWith(String(rest.as)) || pathname.startsWith(rest.data?.url))
+    ) {
+      isActive = true;
+    }
   }
 
   return <CustomLink {...{ ...rest, color: isActive ? activeColor : rest.color }}>{children}</CustomLink>;

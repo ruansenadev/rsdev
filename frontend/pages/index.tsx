@@ -1,18 +1,25 @@
 import { GetStaticProps } from "next";
 import { Layout } from "../components/Layout";
 import { Seo } from "../components/Seo";
-import { Strapi } from "../lib/strapi";
-import { StrapiAttr, StrapiError, StrapiResponse } from "../types/api/rest";
-import { IHomePage } from "../types/page";
+import { getGlobalData, getPageData } from "../lib/strapi";
+import { StrapiAttr } from "../types/api/rest";
+import { IPage, IPageContext } from "../types/page";
 import { Sections } from "../components/Sections";
+import { IGlobalApp } from "../types/app";
+import { getLocalizedPaths } from "../utils/strapi";
 
-interface HomeProps extends StrapiAttr<IHomePage> {}
+interface HomeProps {
+  global: IGlobalApp;
+  seo: IPage["seo"];
+  sections: IPage["contentSections"];
+  pageContext: IPageContext;
+}
 
-export default function Home({ seo, contentSections: sections }: HomeProps) {
+export default function Home({ global, seo, sections, pageContext }: HomeProps) {
   return (
-    <Layout>
+    <Layout global={global} pageContext={pageContext}>
       {/* Add meta tags for SEO*/}
-      <Seo seo={seo} />
+      <Seo global={global} seo={seo} />
 
       {/* Display content sections */}
       <Sections sections={sections} />
@@ -21,19 +28,27 @@ export default function Home({ seo, contentSections: sections }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const page = await Strapi.get("homepage", {
-    params: {
-      populate: ["seo", "seo.shareImage", "contentSections", "contentSections.cards", "contentSections.cards.button"],
-    },
-  })
-    .then((res: StrapiResponse<IHomePage>) => res.data.data.attributes)
-    .catch((err: StrapiError) => {
-      console.error(err.response?.data.error ?? err.toJSON());
-      return { seo: {}, contentSections: [] };
-    });
+  const { locale, locales, defaultLocale } = ctx;
+
+  const globalLocale = await getGlobalData(locale);
+
+  const pageData = await getPageData("homepage", locale);
+
+  // console.log(JSON.stringify(pageData, null, 2));
+
+  const pageContext: IPageContext = {
+    slug: "",
+    pageEndpoint: "homepage",
+    locale,
+    locales,
+    defaultLocale,
+    localizations: pageData.localizations,
+  };
+
+  pageContext.localizedPaths = getLocalizedPaths(pageContext);
 
   return {
-    props: { ...page },
+    props: { global: globalLocale, seo: pageData.seo, sections: pageData.contentSections, pageContext },
     revalidate: 60 * 5,
   };
 };

@@ -1,15 +1,14 @@
 import Head from "next/head";
-import { useContext } from "react";
-import { GlobalContext } from "../contexts/GlobalContext";
-import { ISeo } from "../types/app";
+import { IGlobalApp, ISeo } from "../types/app";
 import { getStrapiMedia } from "../utils/strapi";
 
 interface SeoProps {
+  global: IGlobalApp;
   seo: ISeo;
 }
 
-export function Seo({ seo }: SeoProps) {
-  const { siteName, defaultSeo } = useContext(GlobalContext);
+export function Seo({ global, seo }: SeoProps) {
+  const { siteName, defaultSeo } = global;
   const mergedSeo = { ...defaultSeo, ...seo, shareImage: defaultSeo.shareImage?.data?.attributes ?? seo.shareImage?.data?.attributes };
 
   const formattedSeo = {

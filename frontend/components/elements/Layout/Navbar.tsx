@@ -1,5 +1,5 @@
-import { Box, BoxProps, Flex, HStack, Icon, IconButton, Image, Link, useDisclosure, useColorMode, Center } from "@chakra-ui/react";
-import { MdMenu } from "react-icons/md";
+import { Box, BoxProps, Flex, HStack, IconButton, Image, Link, useDisclosure, useColorMode, Center, useColorModeValue } from "@chakra-ui/react";
+
 import NextLink from "next/link";
 import { useState } from "react";
 import { useSidebar } from "../../../contexts/SidebarContext";
@@ -7,16 +7,20 @@ import { INavbar } from "../../../types/app";
 import { ActiveLink } from "../Links/ActiveLink";
 
 import dynamic from "next/dynamic";
+import { IPageContext } from "../../../types/page";
+import { LocaleSwitch } from "../../LocaleSwitch";
 
 const DynamicSlideFade = dynamic<any>(() => import("@chakra-ui/react").then((m) => m.SlideFade), { ssr: false });
 
 interface NavbarProps extends BoxProps {
   navbar: INavbar;
+  pageContext: IPageContext;
   siteName?: string;
 }
 
-export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
+export function Navbar({ navbar, siteName, pageContext, ...rest }: NavbarProps) {
   const { toggleColorMode, colorMode } = useColorMode();
+  const navSlideColor = useColorModeValue("blackAlpha.400", "whiteAlpha.400");
   const { isOpen: isSlide, onClose: onBlur, onOpen: onSlide } = useDisclosure({ defaultIsOpen: false });
   const [slideLeft, setSlideLeft] = useState<number>(0);
   const [slideWidth, setSlideWidth] = useState<number>(0);
@@ -61,7 +65,7 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
                   ))}
                 </HStack>
                 <DynamicSlideFade in={isSlide} offsetY="4px">
-                  <Box pos="absolute" left={slideLeft + "px"} h="2px" w={slideWidth + "px"} bgColor="whiteAlpha.400" shadow="md" />
+                  <Box pos="absolute" left={slideLeft + "px"} h="2px" w={slideWidth + "px"} bgColor={navSlideColor} shadow="md" />
                 </DynamicSlideFade>
               </>
             )}
@@ -72,20 +76,25 @@ export function Navbar({ navbar, siteName, ...rest }: NavbarProps) {
             aria-label="Tema de cores"
             icon={
               <Center w="full" h="full">
-                {colorMode === "dark" ? "☼" : "☀"}
+                {colorMode === "dark" ? "🌑" : "🌕"}
               </Center>
             }
-            fontSize="3xl"
-            variant="unstyled"
+            fontSize="xl"
+            variant="outline"
             onClick={toggleColorMode}
           />
+          <LocaleSwitch pageContext={pageContext} />
           {!!navbar.links?.length && (
             <IconButton
               display={[null, null, null, "none"]}
               aria-label="Menu principal"
-              icon={<Icon as={MdMenu} />}
-              fontSize="3xl"
-              variant="unstyled"
+              icon={
+                <Center w="full" h="full">
+                  🍔
+                </Center>
+              }
+              fontSize="2xl"
+              variant="outline"
               onClick={onOpen}
             />
           )}
