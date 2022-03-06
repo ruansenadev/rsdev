@@ -55,7 +55,7 @@ export function LocaleSwitch({ pageContext }: LocaleSwitchProps) {
         <MenuButton
           as={IconButton}
           icon={
-            <Center px="2" w="full" h="full">
+            <Center w="full" h="full">
               🌎
             </Center>
           }
@@ -63,12 +63,12 @@ export function LocaleSwitch({ pageContext }: LocaleSwitchProps) {
           variant="outline"
           aria-label="Idioma do site"
         />
-        <MenuList minW="24">
+        <MenuList minW="28">
           {pageContext.localizedPaths &&
-            pageContext.localizedPaths.map(({ href, locale }) => {
+            pageContext.localizedPaths.map(({ href, locale, flag }) => {
               return (
                 <ActiveLink href={href} key={locale} locale={locale}>
-                  <MenuItem onClick={() => handleLocaleChange(locale)} key={locale}>
+                  <MenuItem icon={<Center>{flag}</Center>} onClick={() => handleLocaleChange(locale)} key={locale}>
                     {locale}
                   </MenuItem>
                 </ActiveLink>

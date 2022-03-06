@@ -8,7 +8,7 @@ export type IPage = {
   contentSections: StrapiDynamicZone<MainActions>;
 };
 
-export type ILocalizedPath = Pick<GetStaticPropsContext, "locale"> & { href: string };
+export type ILocalizedPath = Pick<GetStaticPropsContext, "locale"> & { href: string; flag: string };
 
 export type IPageContext = Required<Pick<GetStaticPropsContext, "locale" | "defaultLocale" | "locales">> &
   Required<Pick<StrapiAttr<IPage>, "localizations">> & {

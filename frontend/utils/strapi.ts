@@ -1,4 +1,3 @@
-import { GetStaticPropsContext } from "next";
 import { Strapi } from "../lib/strapi";
 import { MediaField } from "../types/api/field";
 import { StrapiResponse } from "../types/api/rest";
@@ -36,8 +35,15 @@ export function getLocalizedPaths(page: Omit<IPageContext, "localizedPaths">) {
     return {
       locale: locale,
       href: localizePath({ ...page, locale }),
+      flag: localizedFlags[locale] ?? localizedFlags["default"],
     };
   });
 
   return paths;
 }
+
+const localizedFlags = {
+  default: "🏳️",
+  "pt-BR": "🇧🇷",
+  en: "🇺🇸",
+};
