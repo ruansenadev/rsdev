@@ -19,15 +19,22 @@
     "favicon": {
       "type": "media",
       "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images"
-      ],
+      "required": false,
+      "allowedTypes": ["images"],
       "pluginOptions": {
         "i18n": {
           "localized": false
         }
       }
+    },
+    "siteName": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "required": true
     },
     "defaultSeo": {
       "type": "component",
@@ -38,7 +45,7 @@
         }
       },
       "component": "shared.page-seo",
-      "required": true
+      "required": false
     },
     "metaAuthor": {
       "pluginOptions": {
@@ -47,16 +54,7 @@
         }
       },
       "type": "string",
-      "required": true
-    },
-    "siteName": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "string",
-      "required": true
+      "required": false
     },
     "navbar": {
       "type": "component",

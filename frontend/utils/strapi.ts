@@ -1,6 +1,6 @@
 import { Strapi } from "../lib/strapi";
 import { MediaField } from "../types/api/field";
-import { StrapiResponse } from "../types/api/rest";
+import { StrapiError, StrapiResponse } from "../types/api/rest";
 import { IPage, IPageContext } from "../types/page";
 
 export function getStrapiMedia(media: MediaField) {
@@ -14,8 +14,12 @@ export async function getLocalizedPage(targetLocale: string, pageContext: IPageC
     return { locale: pageContext.defaultLocale };
   }
 
-  const localePage = await Strapi(`/${pageContext.pageEndpoint}/${localization.id}`).then((res: StrapiResponse<IPage>) => res.data.data);
-  return localePage.attributes;
+  return await Strapi.get(`pages/${localization.id}`)
+    .then((res: StrapiResponse<IPage>) => res.data.data.attributes)
+    .catch((err: StrapiError) => {
+      console.error(err.response?.data.error ?? err.toJSON());
+      return { seo: {}, contentSections: [], localizations: { data: [] }, slug: pageContext.slug, locale: targetLocale };
+    });
 }
 
 export function localizePath(page: Omit<IPageContext, "localizedPaths">) {

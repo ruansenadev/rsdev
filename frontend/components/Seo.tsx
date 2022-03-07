@@ -13,7 +13,7 @@ export function Seo({ global, seo }: SeoProps) {
 
   const formattedSeo = {
     ...mergedSeo,
-    pageTitle: `${mergedSeo.pageTitle} :: ${siteName}`,
+    pageTitle: mergedSeo.pageTitle ? `${mergedSeo.pageTitle} :: ${siteName}` : siteName,
     shareImage: getStrapiMedia(mergedSeo.shareImage),
   };
 

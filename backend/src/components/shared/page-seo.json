@@ -9,7 +9,7 @@
   "attributes": {
     "pageTitle": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "metaDescription": {
       "type": "text",

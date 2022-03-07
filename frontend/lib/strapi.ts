@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { StrapiAttr, StrapiError, StrapiResponse } from "../types/api/rest";
+import { StrapiAttr, StrapiError, StrapiResponse, StrapiResponseList } from "../types/api/rest";
 import { IGlobalApp } from "../types/app";
 import { IPage } from "../types/page";
 
@@ -31,22 +31,28 @@ export async function getGlobalData(locale: string): Promise<StrapiAttr<IGlobalA
     });
 }
 
-export async function getPageData(pageEndpoint: string, locale: string): Promise<StrapiAttr<IPage>> {
-  return await Strapi.get(pageEndpoint, {
-    params: {
-      locale,
-      populate: ["seo", "seo.shareImage", "contentSections", "contentSections.cards", "contentSections.cards.button", "localizations"],
-    },
-  })
-    .then((res: StrapiResponse<IPage>) => res.data.data.attributes)
-    .catch((err: StrapiError) => {
-      if (err.response?.data.error) {
-        if (err.response.data.error.status !== 404) {
-          console.error(err.response.data.error);
+export async function getPageData({ locale, slug }: { locale: string; slug: string }): Promise<StrapiAttr<IPage>> {
+  return (
+    (await Strapi.get("pages", {
+      params: {
+        filters: {
+          slug: { $eq: slug },
+        },
+        locale,
+        populate: ["seo", "seo.shareImage", "contentSections", "contentSections.cards", "contentSections.cards.button", "localizations"],
+      },
+    })
+      .then((res: StrapiResponseList<IPage>) => res.data.data[0]?.attributes)
+      .catch((err: StrapiError) => {
+        if (err.response?.data.error) {
+          if (err.response.data.error.status !== 404) {
+            console.error(err.response.data.error);
+          }
+        } else {
+          console.error(err.toJSON());
         }
-      } else {
-        console.error(err.toJSON());
-      }
-      return { seo: {}, contentSections: [], localizations: { data: [] } } as StrapiAttr<IPage>;
-    });
+        return null;
+      })) || ({ seo: {}, contentSections: [], localizations: { data: [] }, slug } as StrapiAttr<IPage>)
+    // Giving the page no sections will trigger a 404 page
+  );
 }

@@ -1,10 +1,10 @@
 {
-  "kind": "singleType",
-  "collectionName": "homepages",
+  "kind": "collectionType",
+  "collectionName": "pages",
   "info": {
-    "singularName": "homepage",
-    "pluralName": "homepages",
-    "displayName": "Homepage",
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
     "description": ""
   },
   "options": {
@@ -16,6 +16,17 @@
     }
   },
   "attributes": {
+    "slug": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "regex": "^$|^[A-Za-z0-9/-]+$",
+      "default": "",
+      "required": false
+    },
     "seo": {
       "type": "component",
       "repeatable": false,
@@ -36,7 +47,7 @@
       "components": [
         "sections.main-actions"
       ],
-      "required": true
+      "required": false
     }
   }
 }
